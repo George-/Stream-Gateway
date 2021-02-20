@@ -17,11 +17,11 @@ userdata = urllib.request.urlopen(url).read().decode()
 
 while True:
     try:
-        print(userdata)
         userdata = json.loads(userdata)
+        
         for destination in userdata.values():
             ffmpeg = ffmpeg + "-f fifo -fifo_format flv -map 0:0 -map 0:1? -c copy -vtag 7 -atag 10 -drop_pkts_on_overflow 1 -attempt_recovery 1 -recovery_wait_time 1 %s " % (destination)
-        print(ffmpeg)
+
         p1 = subprocess.Popen(ffmpeg.split())
         output,err = p1.communicate()
     except:
