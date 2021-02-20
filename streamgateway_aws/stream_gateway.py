@@ -9,7 +9,7 @@ import glob
 ## Designed to run inside the StreamGateway docker container with FFMpeg pre-built, including the SRT library 
 ## Author: George French 
 
-ffmpeg = "ffmpeg -re -i srt://0.0.0.0?pkt_size=1316&mode=listener -strict -2 -y "
+ffmpeg = "ffmpeg -re -i srt://0.0.0.0:1234?pkt_size=1316&mode=listener -strict -2 -y "
 
 with urllib.request.urlopen("http://169.254.169.254/latest/user-data") as userdata:
     userdata = json.loads(userdata)
