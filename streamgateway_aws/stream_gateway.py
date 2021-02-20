@@ -15,13 +15,15 @@ ffmpeg = "ffmpeg -re -i srt://0.0.0.0:1234?pkt_size=1316&mode=listener -strict -
 url = "http://169.254.169.254/latest/user-data"
 userdata = urllib.request.urlopen(url).read().decode()
 
-try:
-    print(userdata)
-    userdata = json.loads(userdata)
-    for destination in userdata.values():
-        ffmpeg = ffmpeg + "-f fifo -fifo_format flv -map 0:0 -map 0:1? -c copy -vtag 7 -atag 10 -drop_pkts_on_overflow 1 -attempt_recovery 1 -recovery_wait_time 1 %s " % (destination)
-    print(ffmpeg)
-    p1 = subprocess.Popen(ffmpeg.split())
-    output,err = p1.communicate()
-except:
-    pass
+while True:
+    try:
+        print(userdata)
+        userdata = json.loads(userdata)
+        for destination in userdata.values():
+            ffmpeg = ffmpeg + "-f fifo -fifo_format flv -map 0:0 -map 0:1? -c copy -vtag 7 -atag 10 -drop_pkts_on_overflow 1 -attempt_recovery 1 -recovery_wait_time 1 %s " % (destination)
+        print(ffmpeg)
+        p1 = subprocess.Popen(ffmpeg.split())
+        output,err = p1.communicate()
+    except:
+        continue 
+    break
